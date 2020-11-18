@@ -9,7 +9,7 @@ import javax.persistence.Id;
 public class Student {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.IDENTITY) //主键由数据库自动生成
     private Integer id;
     private String name;            //姓名
     private String gender;          //性别

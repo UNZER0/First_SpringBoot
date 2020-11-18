@@ -35,14 +35,14 @@
             <li class="layui-nav-item">
                 <a href="javascript:;">
                     <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                    管理员
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="">基本资料</a></dd>
                     <dd><a href="">安全设置</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="">退出登录</a></li>
+            <li class="layui-nav-item"><a th:text="'欢迎您：'+${#httpSession.getAttribute('user')}"></a></li>
+            <li class="layui-nav-item"><a href="/logoff">退出登录</a></li>
         </ul>
     </div>
 
@@ -111,6 +111,7 @@
                         <input type="text" name="department" lay-verify="required" placeholder="请输入院系"
                                autocomplete="off" class="layui-input">
                     </div>
+                    <div class="layui-form-mid layui-word-aux">请务必填写院系</div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">年级</label>
@@ -118,6 +119,7 @@
                         <input type="text" name="grade" lay-verify="required" placeholder="请输入年级" autocomplete="off"
                                class="layui-input">
                     </div>
+                    <div class="layui-form-mid layui-word-aux">请务必填写年级</div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">层次</label>
@@ -125,6 +127,7 @@
                         <input type="text" name="level" lay-verify="required" placeholder="请输入层次" autocomplete="off"
                                class="layui-input">
                     </div>
+                    <div class="layui-form-mid layui-word-aux">请务必填写层次</div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">学生账号</label>
@@ -137,18 +140,18 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">学生密码</label>
                     <div class="layui-input-inline">
-                        <input type="password" name="password" placeholder="请输入密码" autocomplete="off"
+                        <input type="password" name="password" lay-verify="required" placeholder="请输入密码" autocomplete="off"
                                class="layui-input">
                     </div>
                     <div class="layui-form-mid layui-word-aux">请务必填写密码</div>
                 </div>
 
-                <div class="layui-form-item layui-form-text">
+<!--                <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">添加描述</label>
                     <div class="layui-input-block">
                         <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
                     </div>
-                </div>
+                </div>-->
                 <div class="layui-form-item">
                     <button class="layui-btn" lay-submit="" lay-filter="demo2">确认提交</button>
                 </div>

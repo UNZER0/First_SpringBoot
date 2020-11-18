@@ -18,6 +18,7 @@
         <a class="layui-logo" href="../">学生管理系统</a>
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-left">
+
             <li class="layui-nav-item"><a href="">学生管理</a></li>
             <li class="layui-nav-item"><a href="">用户</a></li>
             <li class="layui-nav-item">
@@ -33,14 +34,14 @@
             <li class="layui-nav-item">
                 <a href="javascript:;">
                     <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                    管理员
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="">基本资料</a></dd>
                     <dd><a href="">安全设置</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="">退出登录</a></li>
+            <li class="layui-nav-item"><a th:text="'欢迎您：'+${#httpSession.getAttribute('user')}"></a></li>
+            <li class="layui-nav-item"><a href="/logoff">退出登录</a></li>
         </ul>
     </div>
 
@@ -75,9 +76,10 @@
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;">
+
             <div class="layui-form-item">
                 <div class="layui-input-inline">
-                    <input type="text"  id="student" lay-verify="required" placeholder="查询学生" autocomplete="off" class="layui-input">
+                    <input type="text"  id="name" lay-verify="required" placeholder="查询学生" autocomplete="off" class="layui-input">
                 </div>
                 <div class="layui-input-inline">
                     <a type="button" onclick="queryStudent()"class="layui-btn " >确定</a>
@@ -92,6 +94,7 @@
                 </colgroup>
                 <thead>
                 <tr>
+                    <td>序号</td>
                     <td>姓名</td>
                     <td>性别</td>
                     <td>学号</td>
@@ -105,7 +108,7 @@
                 </thead>
                 <tbody>
                 <tr th:each ="stu,s:${student}">
-<!--                    <td th:text = "${s.count +(page.getPage()-1)*num}"></td>-->
+                    <td th:text = "${s.count}"></td>
                     <td th:text = "${stu.getName()}"></td>
                     <td th:text = "${stu.getGender()}"></td>
                     <td th:text = "${stu.getStudent_id()}"></td>
@@ -117,8 +120,6 @@
                     <td >
                         <a type="button" class="layui-btn " th:href="@{'/modify/'+${stu.getId()}}">修改</a>
                         <a type="button" class="layui-btn layui-btn-danger" th:href="@{'/delete/'+${stu.getId()}}">删除</a>
-                        <!-- <a th:href="@{'/delete/'+${stu.getId()}}">删除</a>
-                      <a th:href="@{'/modify/'+${stu.getId()}}">修改</a>-->
                     </td>
                 </tr>
                 </tbody>
@@ -136,8 +137,8 @@
 <script>
     function queryStudent() {
 
-        var student=document.getElementById("student").value;
-        window.location.href="../query?student="+student;
+        var name=document.getElementById("name").value;
+        window.location.href="/query?name="+name;
     }
 
 </script>
