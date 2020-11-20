@@ -14,64 +14,11 @@
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
-    <div class="layui-header">
-        <a class="layui-logo" href="../">学生管理系统</a>
-        <!-- 头部区域（可配合layui已有的水平导航） -->
-        <ul class="layui-nav layui-layout-left">
 
-            <li class="layui-nav-item"><a href="">学生管理</a></li>
-            <li class="layui-nav-item"><a href="">用户</a></li>
-            <li class="layui-nav-item">
-                <a href="javascript:;">其它系统</a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">邮件管理</a></dd>
-                    <dd><a href="">消息管理</a></dd>
-                    <dd><a href="">授权管理</a></dd>
-                </dl>
-            </li>
-        </ul>
-        <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item">
-                <a href="javascript:;">
-                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                </a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">安全设置</a></dd>
-                </dl>
-            </li>
-            <li class="layui-nav-item"><a th:text="'欢迎您：'+${#httpSession.getAttribute('user')}"></a></li>
-            <li class="layui-nav-item"><a href="/logoff">退出登录</a></li>
-        </ul>
-    </div>
-
-    <div class="layui-side layui-bg-black">
-        <div class="layui-side-scroll">
-            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
-                <li class="layui-nav-item layui-nav-itemed">
-                    <a class="" href="javascript:;">学生信息管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="../">查看所有学生</a></dd>
-                        <dd><a href="../addstudent">添加学生</a></dd>
-                        <dd><a href="">其他</a></dd>
-                        <dd><a href="">其他</a></dd>
-                        <dd><a href="">其他</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;">其他</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">列表一</a></dd>
-                        <dd><a href="javascript:;">列表二</a></dd>
-                        <dd><a href="">超链接</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item"><a href="">其他</a></li>
-                <li class="layui-nav-item"><a href="">其他</a></li>
-            </ul>
-        </div>
-    </div>
+    <!--    插入顶部-->
+    <div th:insert="~{/common/top :: top}"></div>
+    <!--    插入左边-->
+    <div th:insert="~{/common/left :: left}"></div>
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
@@ -79,13 +26,14 @@
 
             <div class="layui-form-item">
                 <div class="layui-input-inline">
-                    <input type="text"  id="name" lay-verify="required" placeholder="查询学生" autocomplete="off" class="layui-input">
+                    <input type="text" id="name" lay-verify="required" placeholder="查询学生" autocomplete="off"
+                           class="layui-input">
                 </div>
                 <div class="layui-input-inline">
-                    <a type="button" onclick="queryStudent()"class="layui-btn " >确定</a>
+                    <a type="button" onclick="queryStudent()" class="layui-btn ">确定</a>
                 </div>
             </div>
-            <table border="2" align="center" class="layui-table"  lay-even="" lay-skin="row">
+            <table border="2" align="center" class="layui-table" lay-even="" lay-skin="row">
                 <!--            <table class="table table-hover" >-->
                 <colgroup>
                     <col width="150">
@@ -107,19 +55,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each ="stu,s:${student}">
-                    <td th:text = "${s.count}"></td>
-                    <td th:text = "${stu.getName()}"></td>
-                    <td th:text = "${stu.getGender()}"></td>
-                    <td th:text = "${stu.getStudent_id()}"></td>
-                    <td th:text = "${stu.getDepartment()}"></td>
-                    <td th:text = "${stu.getGrade()}"></td>
-                    <td th:text = "${stu.getLevel()}"></td>
-                    <td th:text = "${stu.getAccount()}"></td>
-                    <td th:text = "${stu.getPassword()}"></td>
-                    <td >
+                <tr th:each="stu,s:${student}">
+                    <td th:text="${s.count}"></td>
+                    <td th:text="${stu.getName()}"></td>
+                    <td th:text="${stu.getGender()}"></td>
+                    <td th:text="${stu.getStudentid()}"></td>
+                    <td th:text="${stu.getDepartment()}"></td>
+                    <td th:text="${stu.getGrade()}"></td>
+                    <td th:text="${stu.getLevel()}"></td>
+                    <td th:text="${stu.getAccount()}"></td>
+                    <td th:text="${stu.getPassword()}"></td>
+                    <td>
                         <a type="button" class="layui-btn " th:href="@{'/modify/'+${stu.getId()}}">修改</a>
-                        <a type="button" class="layui-btn layui-btn-danger" th:href="@{'/delete/'+${stu.getId()}}">删除</a>
+                        <a type="button" class="layui-btn layui-btn-danger"
+                           th:href="@{'/delete/'+${stu.getId()}}">删除</a>
                     </td>
                 </tr>
                 </tbody>
@@ -127,18 +76,15 @@
         </div>
 
     </div>
-    <div class="layui-footer" align="center">
-
-        <!-- 底部固定区域 -->
-        <div>Copyright © 2020  ICP备000000号   · All Rights Reserved Powered By <a href="" target="_blank"> GDD </a></div>
-    </div>
+    <!--    插入底部-->
+    <div th:insert="~{/common/footer :: foot}"></div>
 </div>
 </body>
 <script>
     function queryStudent() {
 
-        var name=document.getElementById("name").value;
-        window.location.href="/query?name="+name;
+        var name = document.getElementById("name").value;
+        window.location.href = "/query?name=" + name;
     }
 
 </script>

@@ -19,7 +19,6 @@ public class SessionInterceptor implements HandlerInterceptor {
             if(user!=null){
                 return true;
             }
-            System.out.println("jici");
             response.sendRedirect("/dologin");
         } catch (IOException e) {
             e.printStackTrace();

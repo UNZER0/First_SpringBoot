@@ -15,4 +15,8 @@ public interface StudentRepository extends JpaRepository<Student,Integer> {
     //模糊查询
     @Query(value = "select * from Student where name like CONCAT('%',:name,'%') ",nativeQuery = true)
     List<Student> getquerList(@Param("name") String name);
+
+    //  学号重复？？
+    @Query(value = "select * from Student where studentid=:studentid",nativeQuery = true)
+    List<Student> findByStudentid(@Param("studentid") String studentid);
 }

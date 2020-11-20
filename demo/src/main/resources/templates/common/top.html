@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:fragment="top" class="layui-header">
+    <a class="layui-logo" href="../..">学生管理系统</a>
+    <!-- 头部区域（可配合layui已有的水平导航） -->
+    <ul class="layui-nav layui-layout-left">
+        <li class="layui-nav-item"><a href="">学生管理</a></li>
+        <li class="layui-nav-item"><a href="">用户</a></li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">其它系统</a>
+            <dl class="layui-nav-child">
+                <dd><a href="">邮件管理</a></dd>
+                <dd><a href="">消息管理</a></dd>
+                <dd><a href="">授权管理</a></dd>
+            </dl>
+        </li>
+    </ul>
+    <ul class="layui-nav layui-layout-right">
+        <li class="layui-nav-item">
+            <a href="javascript:;"></a>
+            <img src="/img/admin.jpg" class="layui-nav-img">
+            <dl class="layui-nav-child">
+
+                <dd><a href="">基本资料</a></dd>
+                <dd><a href="">安全设置</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item"><a th:text="'欢迎您：'+${#httpSession.getAttribute('user')}"></a></li>
+        <li class="layui-nav-item"><a href="/logoff">退出登录</a></li>
+    </ul>
+</div>
+
+</body>
+</html>

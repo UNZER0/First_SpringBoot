@@ -14,69 +14,14 @@
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
-    <div class="layui-header">
-        <a class="layui-logo" href="../">学生管理系统</a>
-        <!-- 头部区域（可配合layui已有的水平导航） -->
-        <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item"><a href="">学生管理</a></li>
-            <li class="layui-nav-item"><a href="">用户</a></li>
-            <li class="layui-nav-item">
-                <a href="javascript:;">其它系统</a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">邮件管理</a></dd>
-                    <dd><a href="">消息管理</a></dd>
-                    <dd><a href="">授权管理</a></dd>
-                </dl>
-            </li>
-        </ul>
-        <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item">
-                <a href="javascript:;">
-                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                </a>
-                <dl class="layui-nav-child">
 
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">安全设置</a></dd>
-                </dl>
-            </li>
-            <li class="layui-nav-item"><a th:text="'欢迎您：'+${#httpSession.getAttribute('user')}"></a></li>
-            <li class="layui-nav-item"><a href="/logoff">退出登录</a></li>
-        </ul>
-    </div>
-
-    <div class="layui-side layui-bg-black">
-        <div class="layui-side-scroll">
-            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                <li class="layui-nav-item layui-nav-itemed">
-                    <a class="" href="javascript:;">学生信息管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="../">查看所有学生</a></dd>
-                        <dd><a href="../addstudent">添加学生</a></dd>
-                        <dd><a href="">其他</a></dd>
-                        <dd><a href="">其他</a></dd>
-                        <dd><a href="">其他</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;">其他</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">列表一</a></dd>
-                        <dd><a href="javascript:;">列表二</a></dd>
-                        <dd><a href="">超链接</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item"><a href="">其他</a></li>
-                <li class="layui-nav-item"><a href="">其他</a></li>
-            </ul>
-        </div>
-    </div>
+    <!--    插入顶部-->
+    <div th:insert="~{/common/top :: top}"></div>
+    <!--    插入左边-->
+    <div th:insert="~{/common/left :: left}"></div>
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
-<!--        <input type="hidden" id="deleteResult"  th:value="${deleteResult}"  >
-        <input type="hidden" id="modResult"  th:value="${modResult}"  >-->
         <div style="padding: 15px;">
             <div class="layui-form-item">
                 <div class="layui-input-inline">
@@ -113,7 +58,7 @@
                     <td th:text="${s.count +(page.getPage()-1)*num}"></td>
                     <td th:text="${stu.getName()}"></td>
                     <td th:text="${stu.getGender()}"></td>
-                    <td th:text="${stu.getStudent_id()}"></td>
+                    <td th:text="${stu.getStudentid()}"></td>
                     <td th:text="${stu.getDepartment()}"></td>
                     <td th:text="${stu.getGrade()}"></td>
                     <td th:text="${stu.getLevel()}"></td>
@@ -122,11 +67,9 @@
                     <td>
                         <a type="button" class="layui-btn "
                            th:href="@{'/modify/'+${stu.getId()}}+'?page='+${page.getPage()}">修改</a>
-     <!--                   <button type="button" onclick="confirmDelete()" class="layui-btn layui-btn-danger"-->
                         <a type="button" onclick="javascript:return del();" class="layui-btn layui-btn-danger"
                            th:href="@{'/delete/'+${stu.getId()}}+'?page='+${page.getPage()}">删除</a>
-                        <!-- <a th:href="@{'/delete/'+${stu.getId()}}">删除</a>
-                      <a th:href="@{'/modify/'+${stu.getId()}}">修改</a>-->
+
                     </td>
                 </tr>
                 </tbody>
@@ -136,6 +79,7 @@
             <!--            分页-->
             <nav aria-label="Page navigation" align="center " style="position: relative; bottom: 25px;  ">
                 <ul class="pagination">
+
                     <li th:if="${page.isShowFirstPage()}">
                         <a th:href="@{'/?page=1'}" aria-label="Previous">
                             <span aria-hidden="true">首页</span>
@@ -146,7 +90,8 @@
                             <span aria-hidden="true">上一页</span>
                         </a>
                     </li>
-                    <li th:each="p:${page.getPages()}" th:class="${page.getPage()==p }? 'active' : ''"><a  th:href="@{'/?page='+${p}}" th:text="${p}"></a></li>
+                    <li th:each="p:${page.getPages()}" th:class="${page.getPage()==p }? 'active' : ''"><a
+                            th:href="@{'/?page='+${p}}" th:text="${p}"></a></li>
                     <li th:if="${page.isShowNext()}">
                         <a th:href="@{'/?page='+${page.getPage()+1}}" aria-label="Next">
                             <span aria-hidden="true">下一页</span>
@@ -161,11 +106,8 @@
             </nav>
         </div>
     </div>
-    <div class="layui-footer" align="center">
-
-        <!-- 底部固定区域 -->
-        <div>Copyright © 2020 ICP备000000号 · All Rights Reserved Powered By <a href="" target="_blank"> GDD </a></div>
-    </div>
+    <!--    插入底部-->
+    <div th:insert="~{/common/footer :: foot}"></div>
 </div>
 </body>
 <script>
@@ -179,27 +121,28 @@
 
     function del() {
         var msg = "您真的确定要删除吗？\n\n请三思！！！！";
-        if (confirm(msg)==true){
+        if (confirm(msg) == true) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
+
     function queryStudent() {
 
-        var name=document.getElementById("name").value;
-        window.location.href="/query?name="+name;
+        var name = document.getElementById("name").value;
+        window.location.href = "/query?name=" + name;
     }
 </script>
 <script th:inline="javascript">
     window.onload = function () {
-        if([[${message!=null}]]){
+        if ([[${message!=null}]]) {
             var message = [[${message}]];
-            if (message==1){
+            if (message == 1) {
                 alert("恭喜您，修改成功！");
-            }else if(message==2){
+            } else if (message == 2) {
                 alert("恭喜您，删除成功！");
-            }else if(message==3){
+            } else if (message == 3) {
                 alert("恭喜您，添加成功！");
             }
         }

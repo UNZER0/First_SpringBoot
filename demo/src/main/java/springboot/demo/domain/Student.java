@@ -13,15 +13,12 @@ public class Student {
     private Integer id;
     private String name;            //姓名
     private String gender;          //性别
-    private String student_id;      //学号
+    private String studentid;       //学号
     private String department;      //院系
     private String grade;           //年级
     private String level;           //层次
     private String account;         //账号
     private String password;        //密码
-
-    public Student() {
-    }
 
     public Integer getId() {
         return id;
@@ -47,12 +44,12 @@ public class Student {
         this.gender = gender;
     }
 
-    public String getStudent_id() {
-        return student_id;
+    public String getStudentid() {
+        return studentid;
     }
 
-    public void setStudent_id(String student_id) {
-        this.student_id = student_id;
+    public void setStudentid(String studentid) {
+        this.studentid = studentid;
     }
 
     public String getDepartment() {
@@ -93,20 +90,5 @@ public class Student {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "Student{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", gender='" + gender + '\'' +
-                ", student_id='" + student_id + '\'' +
-                ", department='" + department + '\'' +
-                ", grade='" + grade + '\'' +
-                ", level='" + level + '\'' +
-                ", account='" + account + '\'' +
-                ", password='" + password + '\'' +
-                '}';
     }
 }

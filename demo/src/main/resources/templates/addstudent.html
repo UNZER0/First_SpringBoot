@@ -12,81 +12,31 @@
     <script src="/js/npm.js"></script>
     <script src="/layui/layui.js"></script>
     <link rel="stylesheet" href="/layui/css/layui.css" media="all">
+    <script src="/js/check.js"></script>
 
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
-    <div class="layui-header">
-        <a class="layui-logo" href="../">学生管理系统</a>
-        <!-- 头部区域（可配合layui已有的水平导航） -->
-        <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item"><a href="">学生管理</a></li>
-            <li class="layui-nav-item"><a href="">用户</a></li>
-            <li class="layui-nav-item">
-                <a href="javascript:;">其它系统</a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">邮件管理</a></dd>
-                    <dd><a href="">消息管理</a></dd>
-                    <dd><a href="">授权管理</a></dd>
-                </dl>
-            </li>
-        </ul>
-        <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item">
-                <a href="javascript:;">
-                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                </a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">安全设置</a></dd>
-                </dl>
-            </li>
-            <li class="layui-nav-item"><a th:text="'欢迎您：'+${#httpSession.getAttribute('user')}"></a></li>
-            <li class="layui-nav-item"><a href="/logoff">退出登录</a></li>
-        </ul>
-    </div>
 
-    <div class="layui-side layui-bg-black">
-        <div class="layui-side-scroll">
-            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                <li class="layui-nav-item layui-nav-itemed">
-                    <a class="" href="javascript:;">学生信息管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="../">查看所有学生</a></dd>
-                        <dd><a href="addstudent">添加学生</a></dd>
-                        <dd><a href="">其他</a></dd>
-                        <dd><a href="">其他</a></dd>
-                        <dd><a href="">其他</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;">其他</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">列表一</a></dd>
-                        <dd><a href="javascript:;">列表二</a></dd>
-                        <dd><a href="">超链接</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item"><a href="">其他</a></li>
-                <li class="layui-nav-item"><a href="">其他</a></li>
-            </ul>
-        </div>
-    </div>
+    <!--    插入顶部-->
+    <div th:insert="~{/common/top :: top}"></div>
+    <!--    插入左边-->
+    <div th:insert="~{/common/left :: left}"></div>
 
     <div class="layui-body">
         <!-- 内容主体区域 -->
         <div style="padding: 15px;" align="center">
             <!--提交表单-->
-            <form class="layui-form layui-form-pane" action="/haddleaddstudent" th:method="post" >
+            <form class="layui-form layui-form-pane" name="mform" action="/haddleaddstudent" th:method="post">
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">学生姓名</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="name" lay-verify="required" placeholder="请输入姓名" autocomplete="off"
+                        <input type="text" name="name" onblur="checkName()" lay-verify="required" placeholder="请输入姓名"
+                               autocomplete="off"
                                class="layui-input">
                     </div>
-                    <div class="layui-form-mid layui-word-aux">请务必填写姓名</div>
+                    <div id="name_tip" class="layui-form-mid" style="color:red"></div>
                 </div>
 
                 <div class="layui-form-item">
@@ -100,69 +50,66 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">学号</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="student_id" lay-verify="required" placeholder="请输入学号"
-                               autocomplete="off" class="layui-input">
+                        <input type="text" name="studentid" lay-verify="required" placeholder="请输入学号"
+                               autocomplete="off" class="layui-input" onblur="checkstudentid()">
                     </div>
-                    <div class="layui-form-mid layui-word-aux">请务必填写学号</div>
+                    <div id="studentid_tip" class="layui-form-mid " style="color:red"></div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">院系</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="department" lay-verify="required" placeholder="请输入院系"
+                        <input type="text" name="department" onblur="checkDepart()" lay-verify="required"
+                               placeholder="请输入院系"
                                autocomplete="off" class="layui-input">
                     </div>
-                    <div class="layui-form-mid layui-word-aux">请务必填写院系</div>
+                    <div id="depart_tip" class="layui-form-mid " style="color:red"></div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">年级</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="grade" lay-verify="required" placeholder="请输入年级" autocomplete="off"
+                        <input type="text" name="grade" onblur="checkGrage()" lay-verify="required" placeholder="请输入年级"
+                               autocomplete="off"
                                class="layui-input">
                     </div>
-                    <div class="layui-form-mid layui-word-aux">请务必填写年级</div>
+                    <div id="grade_tip" class="layui-form-mid " style="color:red"></div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">层次</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="level" lay-verify="required" placeholder="请输入层次" autocomplete="off"
+                        <input type="text" name="level" onblur="checkLevel()" lay-verify="required" placeholder="请输入层次"
+                               autocomplete="off"
                                class="layui-input">
                     </div>
-                    <div class="layui-form-mid layui-word-aux">请务必填写层次</div>
+                    <div id="level_tip" class="layui-form-mid" style="color:red"></div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">学生账号</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="account" lay-verify="required" placeholder="请输入账号" autocomplete="off"
+                        <input type="text" name="account" onblur="checkAccount()" lay-verify="required"
+                               placeholder="请输入账号" autocomplete="off"
                                class="layui-input">
                     </div>
-                    <div class="layui-form-mid layui-word-aux">请务必填写账号</div>
+                    <div id="account_tip" class="layui-form-mid " style="color:red"></div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">学生密码</label>
                     <div class="layui-input-inline">
-                        <input type="password" name="password" lay-verify="required" placeholder="请输入密码" autocomplete="off"
+                        <input type="password" name="password" onblur="checkPass()" lay-verify="required"
+                               placeholder="请输入密码"
+                               autocomplete="off"
                                class="layui-input">
                     </div>
-                    <div class="layui-form-mid layui-word-aux">请务必填写密码</div>
+                    <div id="pass_tip" class="layui-form-mid " style="color:red"></div>
                 </div>
-
-<!--                <div class="layui-form-item layui-form-text">
-                    <label class="layui-form-label">添加描述</label>
-                    <div class="layui-input-block">
-                        <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
-                    </div>
-                </div>-->
                 <div class="layui-form-item">
-                    <button class="layui-btn" lay-submit="" lay-filter="demo2">确认提交</button>
+                    <button class="layui-btn" onclick=" return checkAll()" lay-submit="" lay-filter="demo2">确认提交</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <div class="layui-footer" align="center">
-        <!-- 底部固定区域 -->
-        <div>Copyright © 2020 ICP备000000号 · All Rights Reserved Powered By <a href="" target="_blank"> GDD </a></div>
-    </div>
+    <!--    插入底部-->
+    <div th:insert="~{/common/footer :: foot}"></div>
 </div>
 </body>
 <script>
@@ -170,5 +117,50 @@
         var form = layui.form;
     })
 </script>
+
+<script th:inline="javascript">
+    function checkstudentid() {
+        var reg = /^\d{15}$/;
+        var studentid = document.mform.studentid;
+        if (!reg.test(studentid.value)) {
+            document.getElementById("studentid_tip").innerHTML = "<img src='/img/error.png'>请输入学号,15位数字!";
+            studentid.focus();
+            return false;
+        } else {
+            var repeat = isStudentRepeat(studentid);
+            if (repeat) {
+                document.getElementById('studentid_tip').innerHTML = "<img src='/img/error.png'>学号重复，请检查!";
+                studentid.focus();
+                return false;
+            } else {
+                document.getElementById("studentid_tip").innerHTML = "<img src='/img/right.png'>";
+                return true;
+            }
+        }
+    }
+
+    //ajax判断学号是否重复
+    function isStudentRepeat(studentid) {
+        var flag = false;
+        var xhr = new XMLHttpRequest(); //创建异步对象,这里的()别忘记了
+        xhr.open("post", "/studentidrepeat",false);  //设置请求行：请求的方式(post/get)，请求的url   (get:会在网址栏中出现结果，易于测试但安全性不高。post无这种问题)
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");//请求头，在post请求方式中必须有并且特定这种写法
+        xhr.onreadystatechange = function () {   //回调函数，还有一种onload写法 //xhr.onload=function(){}
+            if (this.readyState == 4 && this.status == 200) {  //状态等于4时响应完成，但页面404时仍可接收到响应，所以这里要status(页面状态)==200，既页面正常才给接收响应
+                var data = this.responseText;
+                if (data == 1) {
+                    flag = true;  //学号重复
+                }
+            }
+        };
+        xhr.send("studentid=" + studentid.value);
+        //(请求主体)发送请求，post请求方式的请求信息写在请求主体里，就是这里(这里已经写了)
+        //get请求方式的请求信息写在请求行里，如 xhr.open("get","xxx.php?name=heihei&skill=haha&age=15&sex=man")```
+        return flag;
+    }
+
+
+</script>
+
 </html>
 
